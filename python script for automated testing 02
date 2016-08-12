@@ -122,3 +122,20 @@ browser.find_by_value('登录').first.click()
 但是你在cmd里面报错报成这样真的好吗？
 
 我再改改吧。
+
+把上面那句话改成：
+browser.find_link_by_text('登录').first.click()
+
+测试通过，结果如下：
+[0812/150100:ERROR:angle_platform_impl.cc(33)] ANGLE Display::initialize error 5
+: DXGI 1.2 required to present to HWNDs owned by another process.
+[0812/150100:ERROR:gl_surface_egl.cc(594)] eglInitialize D3D11 failed with error
+ EGL_NOT_INITIALIZED, trying next display type
+测试页面:新浪邮箱
+测试未输入邮箱和密码
+pass
+--------------------------
+
+下一章节贴出这次调试OK的代码。
+
+
