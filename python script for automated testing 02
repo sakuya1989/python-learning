@@ -15,8 +15,47 @@ p%3A%2F%2Fm.taobao.com%2F
 测试未输入用户名
 no elements could be found with name "TPL_username"
 
-问题：
+☆问题：
 发现代码中写的那个网址本身就是打不开的。所以，正尝试用其他网站替代。
 如果是百度网站，如何模拟点击link链接呢？点击link后如果是弹出pop框而不是页面跳转，又如何fill值？
 
+修改了部分代码：
 
+def testLogin(desc, username, password, result):  
+    output(desc)  
+    browser.fill('TANGRAM__PSP_8__userName_clearbtn',username.decode(UTF8))  
+    browser.fill('TANGRAM__PSP_8__userNameTip',password.decode(UTF8))  
+    browser.find_by_value('登录').first.click()  
+    checkresult(result)  
+    
+因为通过查看页面元素得出用户名和密码的输入框是这个名字。这里写的是输入框的id名。
+
+__testUrl = 'http://www.baidu.com'  
+browser = Browser('chrome')  
+browser.visit(__testUrl)  
+output("测试页面:"+browser.title)  
+  
+try:  
+    # test login  
+    loginLink = browser.find_link_by_text('登录')
+    loginLink.first.click()
+    
+    testLogin('测试未输入用户名','','','请输入会员名')  
+
+except Exception,x:  
+    print x  
+
+测试：页面能够打开，但没有点击'登录'按钮的样子（无弹出框显示）
+有如下报错：
+[0812/131549:ERROR:angle_platform_impl.cc(33)] ANGLE Display::initialize error 5
+: DXGI 1.2 required to present to HWNDs owned by another process.
+[0812/131549:ERROR:gl_surface_egl.cc(594)] eglInitialize D3D11 failed with error
+ EGL_NOT_INITIALIZED, trying next display type
+测试页面:百度一下，你就知道
+Message: element not visible
+  (Session info: chrome=51.0.2704.84)
+  (Driver info: chromedriver=2.23.409699 (49b0fa931cda1caad0ae15b7d1b68004acd051
+29),platform=Windows NT 6.1.7601 SP1 x86_64)
+
+
+☆问题：重新尝试点击Link按钮。
