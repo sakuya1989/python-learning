@@ -61,6 +61,64 @@ Message: element not visible
 ☆问题：为什么会出现  element not visible ？
 在这篇文章中有描述 element not visible 的原因： 
 http://blog.csdn.net/a_abg/article/details/38707249
-但似乎都不是以上的原因，总之先学习一下吧。
+但似乎都不是以上的原因，总之先学习一下吧，尽管对我的问题没有什么帮助。
 
-尝试不使用 browser.find_link_by_text的方法进行定位。
+☆问题：尝试不使用 browser.find_link_by_text的方法进行定位如何呢？
+
+放弃测试百度，拿新浪邮箱来测试：
+修改了一部分代码：
+
+def testLogin(desc, username, password, result):  
+    output(desc)  
+    browser.fill('freename',username.decode(UTF8))  
+    browser.fill('freepassword',password.decode(UTF8))  
+    browser.find_by_value('登录').first.click()  
+    checkresult(result)  
+__testUrl = 'http://mail.sina.com.cn/'  
+
+browser = Browser('chrome')  
+browser.visit(__testUrl)  
+output("测试页面:"+browser.title)  
+  
+try:  
+    testLogin('测试未输入邮箱和密码','','','请输入邮箱名')  
+except Exception,x:  
+    print x  
+  
+if CLOASE_AFTER_TEST:  
+    browser.quit()
+    
+
+有如下报错：
+[0812/135629:ERROR:angle_platform_impl.cc(33)] ANGLE Display::initialize error 5
+: DXGI 1.2 required to present to HWNDs owned by another process.
+[0812/135629:ERROR:gl_surface_egl.cc(594)] eglInitialize D3D11 failed with error
+ EGL_NOT_INITIALIZED, trying next display type
+测试页面:新浪邮箱
+测试未输入邮箱和密码
+no elements could be found with name "freename"
+
+可是新浪邮箱对于用户名输入框的html代码是这样的：
+<input tabindex="1" id="freename" type="text" class="username" value="">
+并不认为有什么问题……
+
+先改成这样子试试：
+browser.find_by_id('freename').fill('')
+browser.find_by_id('freepassword').fill('')
+
+有如下报错：
+[0812/144843:ERROR:angle_platform_impl.cc(33)] ANGLE Display::initialize error 5
+: DXGI 1.2 required to present to HWNDs owned by another process.
+[0812/144843:ERROR:gl_surface_egl.cc(594)] eglInitialize D3D11 failed with error
+ EGL_NOT_INITIALIZED, trying next display type
+测试页面:新浪邮箱
+测试未输入邮箱和密码
+no elements could be found with value "鐧诲綍"
+
+
+额……我想……
+大概是这一句出现了问题
+browser.find_by_value('登录').first.click()
+但是你在cmd里面报错报成这样真的好吗？
+
+我再改改吧。
