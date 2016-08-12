@@ -141,3 +141,5 @@ d method Service.__del__ of <selenium.webdriver.chrome.service.Service object at
  0x0278D130>> ignored
  
  推测是要求将chrome的启动文件路径配置到环境变量path中。
+
+
