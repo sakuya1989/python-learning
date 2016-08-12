@@ -114,3 +114,30 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 binary = FirefoxBinary('/path/to/binary')
 driver = webdriver.Firefox(firefox_binary=binary)
+
+推测程序打算启动Firefox浏览器。本机没有安装Firefox，所以将以下语句进行了修改：
+ browser = Browser()    --->    browser = Browser('chrome')
+ 
+ 于是执行之后报这样的错误：
+ Traceback (most recent call last):
+  File "C:\Users\chenjj\Downloads\Sublime Text Build 3114 x64\my.py", line 60, i
+n <module>
+    browser = Browser('chrome')
+  File "build\bdist.win32\egg\splinter\browser.py", line 63, in Browser
+  File "build\bdist.win32\egg\splinter\driver\webdriver\chrome.py", line 31, in
+__init__
+  File "C:\Python27\lib\site-packages\selenium-3.0.0b2-py2.7.egg\selenium\webdri
+ver\chrome\webdriver.py", line 62, in __init__
+    self.service.start()
+  File "C:\Python27\lib\site-packages\selenium-3.0.0b2-py2.7.egg\selenium\webdri
+ver\common\service.py", line 71, in start
+    os.path.basename(self.path), self.start_error_message)
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver' executabl
+e needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chrome
+driver/home
+
+Exception AttributeError: "'Service' object has no attribute 'process'" in <boun
+d method Service.__del__ of <selenium.webdriver.chrome.service.Service object at
+ 0x0278D130>> ignored
+ 
+ 推测是要求将chrome的启动文件路径配置到环境变量path中。
