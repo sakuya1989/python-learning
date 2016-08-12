@@ -15,4 +15,8 @@ p%3A%2F%2Fm.taobao.com%2F
 测试未输入用户名
 no elements could be found with name "TPL_username"
 
-继续解析排错。
+问题：
+发现代码中写的那个网址本身就是打不开的。所以，正尝试用其他网站替代。
+如果是百度网站，如何模拟点击link链接呢？点击link后如果是弹出pop框而不是页面跳转，又如何fill值？
+
+
