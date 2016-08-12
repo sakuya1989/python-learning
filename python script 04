@@ -1,0 +1,36 @@
+调试成功之后，我开始思考将测试数据写在文件或数据库中进行测试……
+browser.find_by_id('freename').fill('')
+browser.find_by_id('freepassword').fill('')  
+重复写这个是不是不太好呢？
+
+那么尝试下从txt文件中读取fill的内容吧。
+
+先在C盘根目录下面放一个txt文件，暂时命名为1.txt
+写入三行文字，按照以下格式：
+测试内容，输入的邮箱名，输入的密码内容，预期的结果（画面上出现的文字）
+注意逗号是英文的逗号，空的话直接两个逗号连起来输入就可以了。
+乱写了一通居然也通过了。
+
+1.txt
+不输入邮箱名,,,请输入邮箱名
+不输入密码,（我的邮箱）,,请输入密码
+输入错误的密码,（我的邮箱）,111,登录名或密码错误
+
+请把（我的邮箱）改成自己的邮箱。我才不会把自己邮箱告诉你呢哼。
+
+try部分这样写：
+try:  
+    f = open("c:\\1.txt")  
+    lines = f.readlines()#读取全部内容  
+
+    for line in lines: 
+        line=line.decode("gbk").replace("\n","").split(",")
+        testLogin(line[0],line[1],line[2],line[3])  
+        
+except Exception,x:  
+    print x  
+    
+这样就可以一下子测试很多件Case啦。
+不过这都是错误的Case，没有一个是正常登陆的。
+来做个正确的登录跳转吧！
+

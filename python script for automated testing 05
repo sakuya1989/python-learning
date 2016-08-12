@@ -1,6 +1,0 @@
-调试成功之后，我开始思考将测试数据写在文件或数据库中进行测试……
-browser.find_by_id('freename').fill('')
-browser.find_by_id('freepassword').fill('x')  
-重复写这个是不是不太好呢？
-
-那么尝试下从txt文件中读取fill的内容吧。
