@@ -1,0 +1,129 @@
+#!/user/bin/python  
+# -*- coding: utf8 -*-  
+  
+import sys  
+import re  
+from splinter.browser import Browser  
+  
+#####################################################  
+# global instance  
+CLOSE_AFTER_TEST = False  
+GBK = "gbk"  
+UTF8 = "utf8"  
+  
+#####################################################  
+# encoding for console  
+reload(sys)  
+sys.setdefaultencoding(UTF8)  
+  
+#####################################################  
+# small method  
+encoding = lambda x:x.encode('gbk')  
+  
+#####################################################  
+def output(x):  
+    print encoding(x)  
+  
+def resultMsg(x):  
+    if x == True:  
+        print 'pass'  
+    else:  
+        print '[X]not pass'  
+    print '--------------------------'  
+  
+def checkresult(x):  
+    resultMsg(browser.is_text_present(x))  
+  
+def testLogin(desc, username, password, result):  
+    output(desc)  
+    browser.find_by_id('freename').fill('')
+    browser.find_by_id('freepassword').fill('x')  
+    browser.find_link_by_text('登录').first.click()  
+    checkresult(result)  
+  
+__testUrl = 'http://mail.sina.com.cn/'  
+browser = Browser('chrome')  
+browser.visit(__testUrl)  
+  
+output("测试页面:"+browser.title)  
+  
+try:  
+    testLogin('测试未输入邮箱和密码','','','请输入邮箱名')  
+
+except Exception,x:  
+    print x  
+  
+if CLOSE_AFTER_TEST:  
+    browser.quit()
+    
+    
+---------------------------------------------------------
+逐行解读：
+
+#!/user/bin/python  
+这个在unix类的操作系统才有意义。
+#!/usr/bin/python是告诉操作系统执行这个脚本的时候，调用/usr/bin下的python解释器；
+#!/usr/bin/env python这种用法是为了防止操作系统用户没有将python装在默认的/usr/bin路径里。
+当系统看到这一行的时候，首先会到env设置里查找python的安装路径，再调用对应路径下的解释器程序完成操作。
+
+# -*- coding: utf8 -*-  
+用来指定文件编码为utf-8的。当文件中使用到中文的时候最好加上这一行。
+  
+import sys  
+import re  
+导入Python标准库sys和re。
+sys为系统相关的信息模块，re是正则表达式。
+对于这些模块，以后会贴出相关知识。
+   
+from splinter.browser import Browser  
+  
+#####################################################  
+# global instance  
+CLOSE_AFTER_TEST = False  
+GBK = "gbk"  
+UTF8 = "utf8"  
+  
+#####################################################  
+# encoding for console  
+reload(sys)  
+sys.setdefaultencoding(UTF8)  
+  
+#####################################################  
+# small method  
+encoding = lambda x:x.encode('gbk')  
+  
+#####################################################  
+def output(x):  
+    print encoding(x)  
+  
+def resultMsg(x):  
+    if x == True:  
+        print 'pass'  
+    else:  
+        print '[X]not pass'  
+    print '--------------------------'  
+  
+def checkresult(x):  
+    resultMsg(browser.is_text_present(x))  
+  
+def testLogin(desc, username, password, result):  
+    output(desc)  
+    browser.find_by_id('freename').fill('')
+    browser.find_by_id('freepassword').fill('x')  
+    browser.find_link_by_text('登录').first.click()  
+    checkresult(result)  
+  
+__testUrl = 'http://mail.sina.com.cn/'  
+browser = Browser('chrome')  
+browser.visit(__testUrl)  
+  
+output("测试页面:"+browser.title)  
+  
+try:  
+    testLogin('测试未输入邮箱和密码','','','请输入邮箱名')  
+
+except Exception,x:  
+    print x  
+  
+if CLOSE_AFTER_TEST:  
+    browser.quit()
