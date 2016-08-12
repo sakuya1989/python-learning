@@ -76,54 +76,59 @@ sys为系统相关的信息模块，re是正则表达式。
 对于这些模块，以后会贴出相关知识。
    
 from splinter.browser import Browser  
+好像要使用 splinter 的功能就得加上这个……
   
 #####################################################  
 # global instance  
 CLOSE_AFTER_TEST = False  
 GBK = "gbk"  
 UTF8 = "utf8"  
+这里是全局变量，没什么可以说的。
   
 #####################################################  
 # encoding for console  
 reload(sys)  
 sys.setdefaultencoding(UTF8)  
+//这两句话貌似是配套的……
   
 #####################################################  
 # small method  
 encoding = lambda x:x.encode('gbk')  
+lambda是什么？一个简易函数，需要一个参数x，返回 x.encode('gbk')  
+大概这个是为了避免x中含有中文字符而导致乱码吧。
   
 #####################################################  
 def output(x):  
-    print encoding(x)  
+    print encoding(x)   //打印x
   
-def resultMsg(x):  
+def resultMsg(x):    //正确打印pass不正确打印not pass
     if x == True:  
         print 'pass'  
     else:  
-        print '[X]not pass'  
+        print 'not pass'  
     print '--------------------------'  
   
 def checkresult(x):  
-    resultMsg(browser.is_text_present(x))  
+    resultMsg(browser.is_text_present(x))  //is_text_present 貌似是检查页面有没有这样的文字
   
 def testLogin(desc, username, password, result):  
-    output(desc)  
-    browser.find_by_id('freename').fill('')
-    browser.find_by_id('freepassword').fill('x')  
-    browser.find_link_by_text('登录').first.click()  
-    checkresult(result)  
+    output(desc)   //打印描述文字
+    browser.find_by_id('freename').fill('')  //填写用户名
+    browser.find_by_id('freepassword').fill('')   //填写密码
+    browser.find_link_by_text('登录').first.click()   //点击登录按钮
+    checkresult(result)  //检验结果
   
-__testUrl = 'http://mail.sina.com.cn/'  
-browser = Browser('chrome')  
-browser.visit(__testUrl)  
+__testUrl = 'http://mail.sina.com.cn/'     //测试的网址
+browser = Browser('chrome')     //打开浏览器
+browser.visit(__testUrl)       //访问测试网址
   
-output("测试页面:"+browser.title)  
+output("测试页面:"+browser.title)    //控制台打印信息
   
 try:  
-    testLogin('测试未输入邮箱和密码','','','请输入邮箱名')  
+    testLogin('测试未输入邮箱和密码','','','请输入邮箱名')   //调用方法
 
 except Exception,x:  
     print x  
   
-if CLOSE_AFTER_TEST:  
-    browser.quit()
+if CLOSE_AFTER_TEST:   //全局变量是否关闭浏览器
+    browser.quit()    //关闭浏览器
