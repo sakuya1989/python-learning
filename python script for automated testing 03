@@ -36,8 +36,8 @@ def checkresult(x):
   
 def testLogin(desc, username, password, result):  
     output(desc)  
-    browser.find_by_id('freename').fill('')
-    browser.find_by_id('freepassword').fill('x')  
+    browser.find_by_id('freename').fill(username)
+    browser.find_by_id('freepassword').fill(password)  
     browser.find_link_by_text('登录').first.click()  
     checkresult(result)  
   
@@ -113,8 +113,8 @@ def checkresult(x):
   
 def testLogin(desc, username, password, result):  
     output(desc)   //打印描述文字
-    browser.find_by_id('freename').fill('')  //填写用户名
-    browser.find_by_id('freepassword').fill('')   //填写密码
+    browser.find_by_id('freename').fill(username)  //填写用户名
+    browser.find_by_id('freepassword').fill(password)   //填写密码
     browser.find_link_by_text('登录').first.click()   //点击登录按钮
     checkresult(result)  //检验结果
   
