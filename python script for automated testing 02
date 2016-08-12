@@ -1,0 +1,18 @@
+上次报错之后，发现了网上有这样的建议：要求安装chromedriver。
+
+1. 下载并解压，你会得到一个chromedriver.exe文件。
+2.将解压后的exe文件放到chrome的安装目录下...\Google\Chrome\Application\ 。
+3.设置path环境变量，把chrome的安装目录添加至环境变量。
+
+完成上述步骤之后，不再报错了。
+运行脚本后能够自动启动chrome。但是加载页面加载不出来，报以下错误：
+[0812/105458:ERROR:angle_platform_impl.cc(33)] ANGLE Display::initialize error 5
+: DXGI 1.2 required to present to HWNDs owned by another process.
+[0812/105458:ERROR:gl_surface_egl.cc(594)] eglInitialize D3D11 failed with error
+ EGL_NOT_INITIALIZED, trying next display type
+测试页面:无法访问 http://waptest.taobao.com/login/login.htm?tpl_redirect_url=htt
+p%3A%2F%2Fm.taobao.com%2F
+测试未输入用户名
+no elements could be found with name "TPL_username"
+
+继续解析排错。
