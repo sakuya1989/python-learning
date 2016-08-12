@@ -34,3 +34,63 @@ except Exception,x:
 不过这都是错误的Case，没有一个是正常登陆的。
 来做个正确的登录跳转吧！
 
+
+对于跳转url的判断，找到如下的一段代码：
+def jumpUrl(urlPattern):  
+    """ 
+        页面跳转出去到新的页面提示信息，使用本方法不关注页面提示内容，仅仅关注跳转页面是否正常 
+        urlPattern：期望跳转到的页面的匹配串，可以是普通页面名称 
+    """  
+    output('期望结果：页面跳转到'+urlPattern)    //控制台输出信息
+  
+    if urlPattern[-1] != '/':       //如果期望页面地址的最后一位是/
+        pattern = "^("+urlPattern+"\?).*"  
+        urlPattern = urlPattern + "?" # 截取出来的会带有一个?，所以这里也要加一个，否则无法相等  
+    else:  
+        pattern = "^("+urlPattern+").*"  
+  
+    r = re.search(re.compile(pattern, re.IGNORECASE), browser.url)  
+    //检索当前url中是否包含了re.compile(pattern, re.IGNORECASE)
+    
+    if r is not None and len(r.groups()) == 1:   //有一个匹配
+        resultMsg(urlPattern == "".join(["%s" % s for s in r.groups()]), '未跳转到指定结果页面')  
+    elif r is not None and len(r.groups()) > 1:   //有多个匹配
+        resultMsg(False, '在跳转结果URL中找到了两个'+urlPattern+'相关的串，请检查是否有问题')  
+    else:  
+        resultMsg(False, '跳转结果URL中没有找到'+urlPattern)  
+        
+        
+解读：
+ Python提供了两种不同的原始操作：match和search。
+ match是从字符串的起点开始做匹配，而search（perl默认）是从字符串做任意匹配。
+ 注意：当正则表达式是' ^ '开头时，match与search是相同的。
+ 
+re.compile(pattern, flags=0)
+编译正则表达式，返回RegexObject对象，然后可以通过RegexObject对象调用match()和search()方法。
+prog = re.compile(pattern)
+result = prog.match(string)
+跟
+result = re.match(pattern, string)
+是等价的。
+第一种方式能实现正则表达式的重用。
+re.compile() 也接受可选的标志参数，常用来实现不同的特殊功能和语法变更。（flags=0）
+re.compile('ab*', re.IGNORECASE)表示re将被做为一个字符串发送给 re.compile()。
+
+re.search(pattern, string, flags=0)
+在字符串中查找，是否能匹配正则表达式。返回_sre.SRE_Match对象，如果不能匹配返回None。
+对于返回的对象：group和groups是两个不同的函数：
+一般，m.group(N) 返回第N组括号匹配的字符。
+而m.group() == m.group(0) == 所有匹配的字符，与括号无关。
+m.groups() 返回所有括号匹配的字符，以tuple格式。
+m.groups() == (m.group(1), m.group(2), ...)
+
+re.match(pattern, string, flags=0)
+字符串的开头是否能匹配正则表达式。返回_sre.SRE_Match对象，如果不能匹配返回None。
+
+
+
+
+没看懂，下次再研究。
+
+
+
