@@ -58,4 +58,9 @@ Message: element not visible
 29),platform=Windows NT 6.1.7601 SP1 x86_64)
 
 
-☆问题：重新尝试点击Link按钮。
+☆问题：为什么会出现  element not visible ？
+在这篇文章中有描述 element not visible 的原因： 
+http://blog.csdn.net/a_abg/article/details/38707249
+但似乎都不是以上的原因，总之先学习一下吧。
+
+尝试不使用 browser.find_link_by_text的方法进行定位。
